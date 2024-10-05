@@ -10,6 +10,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+//one voltageout req
 public class Indexer extends SubsystemBase{
     private final TalonFX IndexerMotor;
     private VoltageOut IndexerRequest;

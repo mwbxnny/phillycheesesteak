@@ -14,6 +14,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+//one pivot (pos), one roller/intake (vel)
 public class Intake extends SubsystemBase{
     private final TalonFX pivotMotor = new TalonFX(5, "canivore");
     private final TalonFX intakeMotor = new TalonFX(10, "rio");

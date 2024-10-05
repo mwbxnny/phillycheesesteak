@@ -1,5 +1,6 @@
-package frc.robot.Subsystems.Arm;
+package.frc.robot.subsystems.shooter;
 
-public class Arm {
-    
+//two motors: position
+public class Arm{
+
 }
