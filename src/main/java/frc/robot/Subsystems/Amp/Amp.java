@@ -20,7 +20,7 @@ public class Amp extends SubsystemBase{
     private double setpointVolts;
 
     public Amp(){
-        AmpMotor = new TalonFX(15, "rio");
+        AmpMotor = new TalonFX(20, "rio");
         AmpRequest = new VoltageOut(0).withEnableFOC(true);
         current = AmpMotor.getStatorCurrent();
         temp = AmpMotor.getDeviceTemp();

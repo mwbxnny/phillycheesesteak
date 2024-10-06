@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 //one pivot (pos), one roller/intake (vel)
 public class Intake extends SubsystemBase{
-    private final TalonFX pivotMotor = new TalonFX(5, "canivore");
-    private final TalonFX intakeMotor = new TalonFX(10, "rio");
+    private final TalonFX pivotMotor = new TalonFX(13, "canivore");
+    private final TalonFX intakeMotor = new TalonFX(14, "rio");
     private final TalonFXConfigurator pivotConfigurator;
     private final TalonFXConfiguration pivotConfigs;
     private final TalonFXConfigurator intakeConfigurator;
