@@ -11,9 +11,10 @@ import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 //two motors velocity
-public class Shooter {
+public class Shooter extends SubsystemBase{
     private final TalonFX leftShooterMotor;
     private final TalonFX rightShooterMotor;
     private final StatusSignal<Double> current1;
@@ -24,7 +25,7 @@ public class Shooter {
     private VoltageOut shootRequestVoltage = new VoltageOut(0).withEnableFOC(true);
     private VelocityVoltage leftRequestVelocity = new VelocityVoltage(0).withEnableFOC(true);
     private VelocityVoltage rightRequestVelocity = new VelocityVoltage(0).withEnableFOC(true);
-    
+
     public Shooter(){
         leftShooterMotor = new TalonFX(16, "canivore"); //number may be wrong
         rightShooterMotor = new TalonFX(17, "canivore"); //number may be wrong

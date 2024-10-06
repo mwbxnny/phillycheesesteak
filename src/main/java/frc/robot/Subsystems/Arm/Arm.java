@@ -54,7 +54,7 @@ public class Arm extends SubsystemBase{
         var leftArmCurrentLimitConfigs = leftArmConfigs.CurrentLimits;
         leftArmCurrentLimitConfigs.StatorCurrentLimit = 50;
         leftArmCurrentLimitConfigs.StatorCurrentLimitEnable = true;
-        
+
         var rightArmMotorOutputConfigs = leftArmConfigs.MotorOutput;
         rightArmMotorOutputConfigs.NeutralMode = NeutralModeValue.Coast;
         rightArmMotorOutputConfigs.Inverted = InvertedValue.Clockwise_Positive;
@@ -70,7 +70,7 @@ public class Arm extends SubsystemBase{
         leftArmConfigs.Slot0.kA = 0.010154;
         leftArmConfigs.Slot0.kG = 0.27;
         leftArmConfigs.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
-    
+
         rightArmConfigs.Slot0.kP = 10;
         rightArmConfigs.Slot0.kI = 0.0;
         rightArmConfigs.Slot0.kD = 0.0;

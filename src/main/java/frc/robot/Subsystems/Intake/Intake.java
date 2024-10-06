@@ -45,7 +45,7 @@ public class Intake extends SubsystemBase{
         var pivotMotorOutputConfigs = pivotConfigs.MotorOutput;
         pivotMotorOutputConfigs.NeutralMode = NeutralModeValue.Brake;
         pivotMotorOutputConfigs.Inverted = InvertedValue.CounterClockwise_Positive;
-        
+
         var pivotCurrentLimitConfigs = pivotConfigs.CurrentLimits;
         pivotCurrentLimitConfigs.StatorCurrentLimit = 50;
         pivotCurrentLimitConfigs.StatorCurrentLimitEnable = true;
@@ -64,7 +64,7 @@ public class Intake extends SubsystemBase{
         motionMagicConfigs.MotionMagicCruiseVelocity = 60;
         motionMagicConfigs.MotionMagicAcceleration = 120;
         motionMagicConfigs.MotionMagicJerk = 10000;
-    
+
         var intakeMotorOutputConfigs = intakeConfigs.MotorOutput;
         intakeMotorOutputConfigs.NeutralMode = NeutralModeValue.Coast;
         intakeMotorOutputConfigs.Inverted = InvertedValue.CounterClockwise_Positive;
