@@ -1,8 +1,17 @@
 package frc.robot.Subsystems.Amp;
 
+import com.ctre.phoenix6.BaseStatusSignal;
+import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 //voltageout req, one motor
-public class Amp {
-    public class Amp extends SubsystemBase{
+public class Amp extends SubsystemBase{
     private final TalonFX AmpMotor;
     private VoltageOut AmpRequest;
     private final StatusSignal<Double> current;
@@ -35,24 +44,23 @@ public class Amp {
         AmpMotor.optimizeBusUtilization();
 
         setpointVolts = 0.0;
-        }
+    }
 
-        public void runAmp(double voltage){
-            setpointVolts = voltage;
-            AmpMotor.setControl(AmpRequest.withOutput(voltage));
-        }
+    public void runAmp(double voltage){
+        setpointVolts = voltage;
+        AmpMotor.setControl(AmpRequest.withOutput(voltage));
+    }
 
-        public double getStatorCurrent(){
-            return current.getValue();
-        }
+    public double getStatorCurrent(){
+        return current.getValue();
+    }
 
-        @Override
-        public void periodic() {
-            BaseStatusSignal.refreshAll(current, temp, RPS);
-            SmartDashboard.putNumber("Amp Voltage", setpointVolts);
-            SmartDashboard.putNumber("Amp Current", current.getValue());
-            SmartDashboard.putNumber("Amp Temperature", temp.getValue());
-            SmartDashboard.putNumber("Amp Speed (RPS)", RPS.getValue());
-        }
+    @Override
+    public void periodic() {
+        BaseStatusSignal.refreshAll(current, temp, RPS);
+        SmartDashboard.putNumber("Amp Voltage", setpointVolts);
+        SmartDashboard.putNumber("Amp Current", current.getValue());
+        SmartDashboard.putNumber("Amp Temperature", temp.getValue());
+        SmartDashboard.putNumber("Amp Speed (RPS)", RPS.getValue());
     }
 }

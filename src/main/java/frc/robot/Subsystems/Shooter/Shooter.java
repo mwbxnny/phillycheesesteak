@@ -1,9 +1,21 @@
 package frc.robot.Subsystems.Shooter;
 
+import com.ctre.phoenix6.BaseStatusSignal;
+import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 //two motors velocity
 public class Shooter {
-    private final TalonFX leftMotor;
-    private final TalonFX rightMotor;
+    private final TalonFX leftShooterMotor;
+    private final TalonFX rightShooterMotor;
     private final StatusSignal<Double> current1;
     private final StatusSignal<Double> temp1;
     private final StatusSignal<Double> RPS1;
@@ -14,37 +26,37 @@ public class Shooter {
     private VelocityVoltage rightRequestVelocity = new VelocityVoltage(0).withEnableFOC(true);
     
     public Shooter(){
-        leftMotor = new TalonFX(17, "canivore");
-        rightMotor = new TalonFX(18, "canivore");
-        current1 = leftMotor.getStatorCurrent();
-        temp1 = leftMotor.getDeviceTemp();
-        RPS1 = leftMotor.getRotorVelocity(); //rotations per sec
-        position1 = leftMotor.getPosition();
+        leftShooterMotor = new TalonFX(16, "canivore"); //number may be wrong
+        rightShooterMotor = new TalonFX(17, "canivore"); //number may be wrong
+        current1 = leftShooterMotor.getStatorCurrent();
+        temp1 = leftShooterMotor.getDeviceTemp();
+        RPS1 = leftShooterMotor.getRotorVelocity(); //rotations per sec
+        position1 = leftShooterMotor.getPosition();
 
-        var leftMotorConfigs = new TalonFXConfiguration();
-        leftMotorConfigs.CurrentLimtis.StatorCurrentLimit = 0.0;
-        leftMotorConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
-        leftMotorConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-        leftMotorConfigs.Slot0.kP = 0.068419;
-        leftMotorConfigs.Slot0.kI = 0.0;
-        leftMotorConfigs.Slot0.kD = 0.0;
-        leftMotorConfigs.Slot0.kS = 0.16488;
-        leftMotorConfigs.Slot0.kV = 0.11167;
-        leftMotorConfigs.Slot0.kA = 0.0077173;
+        var leftShooterMotorConfigs = new TalonFXConfiguration();
+        leftShooterMotorConfigs.CurrentLimits.StatorCurrentLimit = 0.0;
+        leftShooterMotorConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
+        leftShooterMotorConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        leftShooterMotorConfigs.Slot0.kP = 0.068419;
+        leftShooterMotorConfigs.Slot0.kI = 0.0;
+        leftShooterMotorConfigs.Slot0.kD = 0.0;
+        leftShooterMotorConfigs.Slot0.kS = 0.16488;
+        leftShooterMotorConfigs.Slot0.kV = 0.11167;
+        leftShooterMotorConfigs.Slot0.kA = 0.0077173;
 
-        var rightMotorConfigs = new TalonFXConfiguration();
-        rightMotorConfigs.CurrentLimits.StatorCurrentLimit = Constants.shooterConstants.statorCurrentLimit;
-        rightMotorConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
-        rightMotorConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-        rightMotorConfigs.Slot0.kP = 0.068419;
-        rightMotorConfigs.Slot0.kI = 0.0;
-        rightMotorConfigs.Slot0.kD = 0.0;
-        rightMotorConfigs.Slot0.kS = 0.16488;
-        rightMotorConfigs.Slot0.kV = 0.11167;
-        rightMotorConfigs.Slot0.kA = 0.0077173;
+        var rightShooterMotorConfigs = new TalonFXConfiguration();
+        rightShooterMotorConfigs.CurrentLimits.StatorCurrentLimit = 0.0;
+        rightShooterMotorConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
+        rightShooterMotorConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        rightShooterMotorConfigs.Slot0.kP = 0.068419;
+        rightShooterMotorConfigs.Slot0.kI = 0.0;
+        rightShooterMotorConfigs.Slot0.kD = 0.0;
+        rightShooterMotorConfigs.Slot0.kS = 0.16488;
+        rightShooterMotorConfigs.Slot0.kV = 0.11167;
+        rightShooterMotorConfigs.Slot0.kA = 0.0077173;
 
-        leftMotor.getConfigurator().apply(leftMotorConfigs);
-        rightMotor.getConfigurator().apply(rightMotorConfigs);
+        leftShooterMotor.getConfigurator().apply(leftShooterMotorConfigs);
+        rightShooterMotor.getConfigurator().apply(rightShooterMotorConfigs);
 
         BaseStatusSignal.setUpdateFrequencyForAll(
             50,
@@ -54,21 +66,21 @@ public class Shooter {
             position1
         );
 
-        leftMotor.optimizeBusUtilization();
-        rightMotor.optimizeBusUtilization();
+        leftShooterMotor.optimizeBusUtilization();
+        rightShooterMotor.optimizeBusUtilization();
     }
 
     public void setVelocity(double velocity, double ratio){
-        leftMotor.setControl(leftRequestVelocity.withVelocity(velocity*1.0/(Unit.inchesToMeters(4)*Math.PI)));
-        rightMotor.setControl(rightRequestVelocity.withVelocity((velocity*ratio)*1.0/(Unit.inchesToMeters(4)*Math.PI)));
+        leftShooterMotor.setControl(leftRequestVelocity.withVelocity(velocity*1.0/(Units.inchesToMeters(4)*Math.PI)));
+        rightShooterMotor.setControl(rightRequestVelocity.withVelocity((velocity*ratio)*1.0/(Units.inchesToMeters(4)*Math.PI)));
     }
 
-    public void SetVOltage(double voltage){
-        rightMotor.setControl(new FOllower(leftMotor.getDeviceID(), true));
-        leftMotor.setControl(shootRequestVoltage.withOutput(voltage));
+    public void SetVoltage(double voltage){
+        rightShooterMotor.setControl(new Follower(leftShooterMotor.getDeviceID(), true));
+        leftShooterMotor.setControl(shootRequestVoltage.withOutput(voltage));
     }
 
-    @Override
+    //@Override
     public void periodic() {
         BaseStatusSignal.refreshAll(current1, temp1, RPS1);
         SmartDashboard.putNumber("Shooter Current", current1.getValue());
