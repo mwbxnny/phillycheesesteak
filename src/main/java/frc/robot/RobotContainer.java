@@ -6,9 +6,21 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Subsystems.Amp.Amp;
+import frc.robot.Subsystems.Arm.Arm;
+import frc.robot.Subsystems.Indexer.Indexer;
+import frc.robot.Subsystems.Intake.Intake;
+import frc.robot.Subsystems.Shooter.Shooter;
 
 public class RobotContainer {
   public RobotContainer() {
+    final CommandXboxController controller = new CommandXboxController(0);
+    final Amp amp = new Amp();
+    final Arm arm = new Arm();
+    final Indexer indexer = new Indexer();
+    final Intake intake = new Intake();
+    final Shooter shooter = new Shooter();
     configureBindings();
   }
 

@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //one pivot (pos), one roller/intake (vel)
 public class Intake extends SubsystemBase{
     private final TalonFX pivotMotor = new TalonFX(13, "canivore");
-    private final TalonFX intakeMotor = new TalonFX(14, "rio");
+    private final TalonFX intakeMotor = new TalonFX(14, "canivore");
     private final TalonFXConfigurator pivotConfigurator;
     private final TalonFXConfiguration pivotConfigs;
     private final TalonFXConfigurator intakeConfigurator;
@@ -44,7 +44,7 @@ public class Intake extends SubsystemBase{
 
         var pivotMotorOutputConfigs = pivotConfigs.MotorOutput;
         pivotMotorOutputConfigs.NeutralMode = NeutralModeValue.Brake;
-        pivotMotorOutputConfigs.Inverted = InvertedValue.CounterClockwise_Positive;
+        pivotMotorOutputConfigs.Inverted = InvertedValue.Clockwise_Positive;
 
         var pivotCurrentLimitConfigs = pivotConfigs.CurrentLimits;
         pivotCurrentLimitConfigs.StatorCurrentLimit = 50;
@@ -67,7 +67,7 @@ public class Intake extends SubsystemBase{
 
         var intakeMotorOutputConfigs = intakeConfigs.MotorOutput;
         intakeMotorOutputConfigs.NeutralMode = NeutralModeValue.Coast;
-        intakeMotorOutputConfigs.Inverted = InvertedValue.CounterClockwise_Positive;
+        intakeMotorOutputConfigs.Inverted = InvertedValue.Clockwise_Positive;
 
         var intakeCurrentLimitConfigs = intakeConfigs.CurrentLimits;
         intakeCurrentLimitConfigs.StatorCurrentLimit = 50;
@@ -100,9 +100,8 @@ public class Intake extends SubsystemBase{
 
     public void requestSetpoint(double angleDegrees){
         pivotMotorSetpoint = angleDegrees;
-        double pivotSetpointRotations = angleDegrees / (360.0/ (23.625));
+        double pivotSetpointRotations = angleDegrees / (360.0/ (76.1904761905));
         pivotMotor.setControl(pivotMotorMotionMagicRequest.withPosition(pivotSetpointRotations));
-        
     }
 
     public void requestIntakeVoltage(double voltage){

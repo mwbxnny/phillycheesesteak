@@ -26,8 +26,6 @@ public class Arm extends SubsystemBase{
     double leftArmSetpoint;
 
     private final TalonFX rightArm = new TalonFX(19, "rio");
-    private final TalonFXConfigurator rightArmConfigurator;
-    private final TalonFXConfiguration rightArmConfigs;
     MotionMagicVoltage rightArmMotionMagicRequest;
     VoltageOut rightArmVoltageRequest;
     double rightArmSetpoint;
@@ -45,8 +43,6 @@ public class Arm extends SubsystemBase{
     public Arm(){
         leftArmConfigurator = leftArm.getConfigurator();
         leftArmConfigs = new TalonFXConfiguration();
-        rightArmConfigurator = rightArm.getConfigurator();
-        rightArmConfigs = new TalonFXConfiguration();
 
         var leftArmMotorOutputConfigs = leftArmConfigs.MotorOutput;
         leftArmMotorOutputConfigs.NeutralMode = NeutralModeValue.Coast;
@@ -54,13 +50,6 @@ public class Arm extends SubsystemBase{
         var leftArmCurrentLimitConfigs = leftArmConfigs.CurrentLimits;
         leftArmCurrentLimitConfigs.StatorCurrentLimit = 50;
         leftArmCurrentLimitConfigs.StatorCurrentLimitEnable = true;
-
-        var rightArmMotorOutputConfigs = leftArmConfigs.MotorOutput;
-        rightArmMotorOutputConfigs.NeutralMode = NeutralModeValue.Coast;
-        rightArmMotorOutputConfigs.Inverted = InvertedValue.Clockwise_Positive;
-        var rightArmCurrentLimitConfigs = rightArmConfigs.CurrentLimits;
-        rightArmCurrentLimitConfigs.StatorCurrentLimit = 50;
-        rightArmCurrentLimitConfigs.StatorCurrentLimitEnable = true;
 
         leftArmConfigs.Slot0.kP = 10;
         leftArmConfigs.Slot0.kI = 0.0;
@@ -71,22 +60,9 @@ public class Arm extends SubsystemBase{
         leftArmConfigs.Slot0.kG = 0.27;
         leftArmConfigs.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
 
-        rightArmConfigs.Slot0.kP = 10;
-        rightArmConfigs.Slot0.kI = 0.0;
-        rightArmConfigs.Slot0.kD = 0.0;
-        rightArmConfigs.Slot0.kS = 0.23;
-        rightArmConfigs.Slot0.kV = 0.25;
-        rightArmConfigs.Slot0.kA = 0.010154;
-        rightArmConfigs.Slot0.kG = 0.27;
-        rightArmConfigs.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
-
         leftArmConfigs.MotionMagic.MotionMagicCruiseVelocity = 75;
         leftArmConfigs.MotionMagic.MotionMagicAcceleration = 150;
         leftArmConfigs.MotionMagic.MotionMagicJerk = 10000;
-
-        rightArmConfigs.MotionMagic.MotionMagicCruiseVelocity = 75;
-        rightArmConfigs.MotionMagic.MotionMagicAcceleration = 150;
-        rightArmConfigs.MotionMagic.MotionMagicJerk = 10000;
 
         leftArmMotionMagicRequest = new MotionMagicVoltage(0).withSlot(0).withEnableFOC(true);
         leftArmVoltageRequest = new VoltageOut(0).withEnableFOC(true);

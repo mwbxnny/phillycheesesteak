@@ -30,7 +30,7 @@ public class Amp extends SubsystemBase{
         var AmpCurrentLimitConfigs = AmpConfigs.CurrentLimits;
         AmpCurrentLimitConfigs.StatorCurrentLimit = 50; //number might be wrong
         AmpCurrentLimitConfigs.StatorCurrentLimitEnable = true;
-        AmpConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        AmpConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
         AmpMotor.getConfigurator().apply(AmpConfigs);
 

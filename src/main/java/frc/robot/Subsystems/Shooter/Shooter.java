@@ -27,8 +27,8 @@ public class Shooter extends SubsystemBase{
     private VelocityVoltage rightRequestVelocity = new VelocityVoltage(0).withEnableFOC(true);
 
     public Shooter(){
-        leftShooterMotor = new TalonFX(16, "canivore"); //number may be wrong
-        rightShooterMotor = new TalonFX(17, "canivore"); //number may be wrong
+        leftShooterMotor = new TalonFX(16, "rio"); //number may be wrong
+        rightShooterMotor = new TalonFX(17, "rio"); //number may be wrong
         current1 = leftShooterMotor.getStatorCurrent();
         temp1 = leftShooterMotor.getDeviceTemp();
         RPS1 = leftShooterMotor.getRotorVelocity(); //rotations per sec
@@ -37,7 +37,7 @@ public class Shooter extends SubsystemBase{
         var leftShooterMotorConfigs = new TalonFXConfiguration();
         leftShooterMotorConfigs.CurrentLimits.StatorCurrentLimit = 0.0;
         leftShooterMotorConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
-        leftShooterMotorConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        leftShooterMotorConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         leftShooterMotorConfigs.Slot0.kP = 0.068419;
         leftShooterMotorConfigs.Slot0.kI = 0.0;
         leftShooterMotorConfigs.Slot0.kD = 0.0;
@@ -48,7 +48,7 @@ public class Shooter extends SubsystemBase{
         var rightShooterMotorConfigs = new TalonFXConfiguration();
         rightShooterMotorConfigs.CurrentLimits.StatorCurrentLimit = 0.0;
         rightShooterMotorConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
-        rightShooterMotorConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        rightShooterMotorConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         rightShooterMotorConfigs.Slot0.kP = 0.068419;
         rightShooterMotorConfigs.Slot0.kI = 0.0;
         rightShooterMotorConfigs.Slot0.kD = 0.0;
