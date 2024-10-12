@@ -35,7 +35,7 @@ public class Shooter extends SubsystemBase{
         position1 = leftShooterMotor.getPosition();
 
         var leftShooterMotorConfigs = new TalonFXConfiguration();
-        leftShooterMotorConfigs.CurrentLimits.StatorCurrentLimit = 0.0;
+        leftShooterMotorConfigs.CurrentLimits.StatorCurrentLimit = 50.0;
         leftShooterMotorConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
         leftShooterMotorConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         leftShooterMotorConfigs.Slot0.kP = 0.068419;
@@ -46,7 +46,7 @@ public class Shooter extends SubsystemBase{
         leftShooterMotorConfigs.Slot0.kA = 0.0077173;
 
         var rightShooterMotorConfigs = new TalonFXConfiguration();
-        rightShooterMotorConfigs.CurrentLimits.StatorCurrentLimit = 0.0;
+        rightShooterMotorConfigs.CurrentLimits.StatorCurrentLimit = 50.0;
         rightShooterMotorConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
         rightShooterMotorConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         rightShooterMotorConfigs.Slot0.kP = 0.068419;
