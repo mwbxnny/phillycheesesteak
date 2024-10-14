@@ -1,66 +1,35 @@
 package frc.robot.Subsystems.Indexer;
 
-import com.ctre.phoenix6.BaseStatusSignal;
-import com.ctre.phoenix6.StatusSignal;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.VoltageOut;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-//one voltageout req
 public class Indexer extends SubsystemBase{
-    private final TalonFX IndexerMotor;
-    private VoltageOut IndexerRequest;
-    private final StatusSignal<Double> current;
-    private final StatusSignal<Double> temp;
-    private final StatusSignal<Double> RPS;
+    private final IndexerIO indexerIO;
+    private final IndexerIOInputsAutoLogged inputs = new IndexerIOInputsAutoLogged();
     private double setpointVolts;
 
-    public Indexer(){
-        IndexerMotor = new TalonFX(15, "canivore");
-        IndexerRequest = new VoltageOut(0).withEnableFOC(true);
-        current = IndexerMotor.getStatorCurrent();
-        temp = IndexerMotor.getDeviceTemp();
-        RPS = IndexerMotor.getRotorVelocity();
+    public Indexer(IndexerIO indexerIO){
+        this.indexerIO = indexerIO;
+        setpointVolts = 0.0;
+    }
 
-        var IndexerConfigs = new TalonFXConfiguration();
-        var IndexerCurrentLimitConfigs = IndexerConfigs.CurrentLimits;
-        IndexerCurrentLimitConfigs.StatorCurrentLimit = 50;
-        IndexerCurrentLimitConfigs.StatorCurrentLimitEnable = true;
-        IndexerConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-
-        IndexerMotor.getConfigurator().apply(IndexerConfigs);
-
-        BaseStatusSignal.setUpdateFrequencyForAll(
-            50,
-            current,
-            temp,
-            RPS
-        );
-
-    IndexerMotor.optimizeBusUtilization();
-
-    setpointVolts = 0.0;
+    @Override
+    public void periodic(){
+        indexerIO.updateInputs(inputs);
+        Logger.processInputs("Handoff", inputs);
     }
 
     public void runIndexer(double voltage){
         setpointVolts = voltage;
-        IndexerMotor.setControl(IndexerRequest.withOutput(voltage));
+        indexerIO.runIndexer(setpointVolts);
     }
 
     public double getStatorCurrent(){
-        return current.getValue();
+        return inputs.currentAmps;
     }
 
-    @Override
-    public void periodic() {
-        BaseStatusSignal.refreshAll(current, temp, RPS);
-        SmartDashboard.putNumber("Handoff Voltage", setpointVolts);
-        SmartDashboard.putNumber("Handoff Current", current.getValue());
-        SmartDashboard.putNumber("Handoff Temperature", temp.getValue());
-        SmartDashboard.putNumber("Handoff Speed (RPS)", RPS.getValue());
+    public void updateInputs(){
+        indexerIO.updateInputs(inputs);
     }
+    
 }
